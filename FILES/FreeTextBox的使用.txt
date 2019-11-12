@@ -1,0 +1,11 @@
+FreeTextBox的使用：
+1。FreeTextBox.dll放到bin目录下
+2。ftb.colorpicker.aspx
+   ftb.imagegallery.aspx
+   ftb.inserttable.aspx
+如publish.aspx这个页面使用了FreeTextBox这个控件，则将上述这三个文件的路径与publish.aspx一致，也即在同一目录下
+3。<FTB:FreeTextBox ID="FreeTextBox1" runat="server" ImageGalleryPath="Upload">
+   </FTB:FreeTextBox>
+点插入图片按钮时，会到Upload文件夹下去找图片，如果没有，可以上传本地图片到这个文件夹下。Upload文件夹位于工程根目录下
+4.在页面中加入validateRequest="false"或在web.config中加入  <pages validateRequest="false"/> 
+ 

@@ -1,0 +1,85 @@
+public class LastTest
+{
+
+	public static void main(String[] args)
+	{
+		queue q=new queue();
+		producer p=new producer(q);
+		consumer c=new consumer(q);
+		p.start();
+		c.start();
+
+	}
+
+}
+class producer extends Thread
+{
+	queue q;
+	producer(queue q)
+	{
+		this.q=q;
+	}
+	public void run()
+	{
+		for(int i=0;i<10;i++)
+		{
+			q.put(i);
+			System.out.println("Producer put"+ i);
+		}
+	}
+}
+class consumer extends Thread
+{
+	queue q;
+	consumer(queue q)
+	{
+		this.q=q;
+		
+	}
+	public void run()
+	{
+		while(true)
+			System.out.println("consumer get"+ q.get()); 
+	}
+}
+class queue
+{
+	int value;
+	boolean bFull=false;
+	public synchronized void put(int i)
+	{
+		if(!bFull)
+		{
+			value=i;
+			bFull=true;
+			notify();
+	}
+		try
+		{
+			wait();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public synchronized int get()
+	{
+		if(!bFull)
+		{
+			try
+			{
+				wait();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		bFull=false;
+		notify();
+		return value;
+	}
+}
